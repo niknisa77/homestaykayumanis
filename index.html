@@ -30,6 +30,9 @@
     <meta name="twitter:image" content="https://[nama-pengguna-github].github.io/homestay-kayu-manis/images/gambarutama.jpeg">
     <meta name="twitter:site" content="@homestaykm">
     
+    <!-- ===== PRELOAD — gambar hero load DULU sebelum apa-apa ===== -->
+    <link rel="preload" as="image" href="images/gambarutama.jpeg" fetchpriority="high">
+
     <!-- ===== FAVICON ===== -->
     <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
     <link rel="apple-touch-icon" href="images/logo.jpeg">
@@ -114,8 +117,10 @@
     <!-- ===== GOOGLE FONTS & FONTAWESOME ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <!-- ===== GEOLOCATION META ===== -->
     <meta name="geo.region" content="MY-08">
@@ -246,7 +251,7 @@
         .hero-bg {
             position: absolute;
             inset: 0;
-            background: url('images/gambarutama.jpeg') center/cover no-repeat;
+            background: url('images/gambarutama.jpeg') center center / cover no-repeat;
             transform-origin: center;
             will-change: transform;
             filter: blur(1.5px) brightness(0.9);
@@ -431,26 +436,14 @@
 
         .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-        .hero-scroll {
-            position: absolute;
-            bottom: 35px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255,255,255,0.35);
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
         .hero-scroll { display: none; }
 
         /* ===== STATS BAR ===== */
-        .stats-bar { background: var(--dark-2); border-top: 1px solid rgba(201,168,76,0.2); border-bottom: 1px solid rgba(201,168,76,0.1); }
+        .stats-bar {
+            background: var(--dark-2);
+            border-top: 1px solid rgba(201,168,76,0.2);
+            border-bottom: 1px solid rgba(201,168,76,0.1);
+        }
 
         .stats-inner {
             max-width: 1400px;
@@ -1108,7 +1101,6 @@
         .footer-social a:hover { border-color: var(--dark); color: var(--dark); background: white; }
 
         /* Right column */
-
         .footer-contact-list { list-style: none; }
 
         .footer-contact-list li {
@@ -1140,6 +1132,26 @@
         }
 
         .footer-bottom p { font-size: 0.7rem; color: rgba(90,60,10,0.5); letter-spacing: 1px; }
+
+        /* ===== IMAGE FALLBACK — kalau gambar lambat load ===== */
+        .gallery-item { background: #1a1612; }
+        .aktiviti-item { background: #1a1612; }
+
+        /* Smooth fade-in bila gambar dah load */
+        .gallery-item img,
+        .aktiviti-item img,
+        .about-img-main,
+        .about-img-accent {
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+
+        .gallery-item img.img-loaded,
+        .aktiviti-item img.img-loaded,
+        .about-img-main.img-loaded,
+        .about-img-accent.img-loaded {
+            opacity: 1;
+        }
 
         /* Gallery mobile only item */
         .gallery-mobile-only { display: none; }
@@ -1309,8 +1321,20 @@
             .nav-container { padding: 14px 16px; }
             .section-wrapper { padding: 50px 18px; }
 
-            /* HERO */
-            .hero-content { padding: 90px 20px 0; }
+            /* ===== HERO MOBILE FIX — saiz sama macam desktop, takde ruang lebih ===== */
+            .hero {
+                min-height: 100svh;
+                height: 100svh;
+                max-height: -webkit-fill-available;
+            }
+
+            .hero-bg {
+                background-position: center center;
+                background-size: cover;
+                background-attachment: scroll;
+            }
+
+            .hero-content { padding: 80px 20px 30px; }
             .hero-title { font-size: clamp(3.5rem, 15vw, 5.5rem); letter-spacing: -2px; }
             .hero-line-top::before, .hero-line-top::after { display: none; }
             .hero-line-top { gap: 0; }
@@ -1516,8 +1540,8 @@
                     </a>
                 </div>
                 <div class="about-image-stack">
-                    <img src="images/rumah-front.jpeg" alt="Rumah Homestay Kayu Manis di Batu Kurau, Perak - Pemandangan Luar" class="about-img-main">
-                    <img src="images/ruang-tamu.jpeg" alt="Ruang Tamu Homestay Kayu Manis yang selesa dan eksklusif" class="about-img-accent">
+                    <img src="images/rumah-front.jpeg" alt="Rumah Homestay Kayu Manis di Batu Kurau, Perak - Pemandangan Luar" class="about-img-main" loading="eager" decoding="async">
+                    <img src="images/ruang-tamu.jpeg" alt="Ruang Tamu Homestay Kayu Manis yang selesa dan eksklusif" class="about-img-accent" loading="eager" decoding="async">
                     <div class="price-tag">
                         <span class="amount">RM250</span>
                         <span class="per">/ malam</span>
@@ -1539,44 +1563,44 @@
             </div>
             <div class="gallery-grid-clean">
                 <div class="gallery-item">
-                    <img src="images/ruang-tamu.jpeg" alt="Ruang Tamu Homestay Kayu Manis dengan hiasan tradisional moden">
+                    <img loading="lazy" decoding="async" src="images/ruang-tamu.jpeg" alt="Ruang Tamu Homestay Kayu Manis dengan hiasan tradisional moden">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Ruang Tamu</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/bilik-utama.jpeg" alt="Bilik Tidur Utama Homestay Kayu Manis dengan katil queen size">
+                    <img loading="lazy" decoding="async" src="images/bilik-utama.jpeg" alt="Bilik Tidur Utama Homestay Kayu Manis dengan katil queen size">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Bilik Tidur Utama</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/dapur.jpeg" alt="Dapur Lengkap Homestay Kayu Manis dengan peralatan moden">
+                    <img loading="lazy" decoding="async" src="images/dapur.jpeg" alt="Dapur Lengkap Homestay Kayu Manis dengan peralatan moden">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Dapur Lengkap</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/ruang2.jpeg" alt="Sudut Santai Homestay Kayu Manis untuk bersantai">
+                    <img loading="lazy" decoding="async" src="images/ruang2.jpeg" alt="Sudut Santai Homestay Kayu Manis untuk bersantai">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Sudut Santai</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/bilik-2.jpeg" alt="Bilik Kedua Homestay Kayu Manis dengan dua katil single">
+                    <img loading="lazy" decoding="async" src="images/bilik-2.jpeg" alt="Bilik Kedua Homestay Kayu Manis dengan dua katil single">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Bilik Kedua</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/tandas.jpeg" alt="Bilik Air Homestay Kayu Manis bersih dan selesa">
+                    <img loading="lazy" decoding="async" src="images/tandas.jpeg" alt="Bilik Air Homestay Kayu Manis bersih dan selesa">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Bilik Air</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/halaman.jpeg" alt="Halaman Luas Homestay Kayu Manis untuk aktiviti luar">
+                    <img loading="lazy" decoding="async" src="images/halaman.jpeg" alt="Halaman Luas Homestay Kayu Manis untuk aktiviti luar">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Halaman Luas</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/dining.jpeg" alt="Ruang Makan Homestay Kayu Manis muat untuk 8-10 orang">
+                    <img loading="lazy" decoding="async" src="images/dining.jpeg" alt="Ruang Makan Homestay Kayu Manis muat untuk 8-10 orang">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Ruang Makan</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/santai.jpeg" alt="Ruang Aktiviti Homestay Kayu Manis untuk berkumpul">
+                    <img loading="lazy" decoding="async" src="images/santai.jpeg" alt="Ruang Aktiviti Homestay Kayu Manis untuk berkumpul">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Ruang Aktiviti</div>
                 </div>
                 <!-- iron.jpeg — mobile only -->
                 <div class="gallery-item gallery-mobile-only">
-                    <img src="images/iron.jpeg" alt="Kemudahan Lengkap Homestay Kayu Manis termasuk iron dan papan seterika">
+                    <img loading="lazy" decoding="async" src="images/iron.jpeg" alt="Kemudahan Lengkap Homestay Kayu Manis termasuk iron dan papan seterika">
                     <div class="gallery-caption-top"><i class="fas fa-circle"></i> Kemudahan Lengkap</div>
                 </div>
             </div>
@@ -1596,49 +1620,49 @@
         </div>
         <div class="aktiviti-grid">
             <div class="aktiviti-item">
-                <img src="images/aktiviti1.jpeg" alt="Aktiviti BBQ Malam di Homestay Kayu Manis Batu Kurau">
+                <img loading="lazy" decoding="async" src="images/aktiviti1.jpeg" alt="Aktiviti BBQ Malam di Homestay Kayu Manis Batu Kurau">
                 <div class="aktiviti-overlay">
                     <div class="aktiviti-num">01</div>
                     <div class="aktiviti-name">BBQ Malam</div>
                 </div>
             </div>
             <div class="aktiviti-item">
-                <img src="images/aktiviti2.jpeg" alt="Minum Kopi Luar di halaman Homestay Kayu Manis">
+                <img loading="lazy" decoding="async" src="images/aktiviti2.jpeg" alt="Minum Kopi Luar di halaman Homestay Kayu Manis">
                 <div class="aktiviti-overlay">
                     <div class="aktiviti-num">02</div>
                     <div class="aktiviti-name">Minum Kopi Luar</div>
                 </div>
             </div>
             <div class="aktiviti-item">
-                <img src="images/bersila.jpeg" alt="Santai Bersila di ruang tamu Homestay Kayu Manis">
+                <img loading="lazy" decoding="async" src="images/bersila.jpeg" alt="Santai Bersila di ruang tamu Homestay Kayu Manis">
                 <div class="aktiviti-overlay">
                     <div class="aktiviti-num">03</div>
                     <div class="aktiviti-name">Santai Bersila</div>
                 </div>
             </div>
             <div class="aktiviti-item">
-                <img src="images/aktiviti3.jpeg" alt="Aktiviti Tradisional bersama keluarga di Homestay Kayu Manis">
+                <img loading="lazy" decoding="async" src="images/aktiviti3.jpeg" alt="Aktiviti Tradisional bersama keluarga di Homestay Kayu Manis">
                 <div class="aktiviti-overlay">
                     <div class="aktiviti-num">04</div>
                     <div class="aktiviti-name">Aktiviti Tradisional</div>
                 </div>
             </div>
             <div class="aktiviti-item">
-                <img src="images/tamu2.jpeg" alt="Sudut Bar Santai di Homestay Kayu Manis">
+                <img loading="lazy" decoding="async" src="images/tamu2.jpeg" alt="Sudut Bar Santai di Homestay Kayu Manis">
                 <div class="aktiviti-overlay">
                     <div class="aktiviti-num">05</div>
                     <div class="aktiviti-name">Sudut Bar Santai</div>
                 </div>
             </div>
             <div class="aktiviti-item">
-                <img src="images/dapur1.jpeg" alt="Dapur Moden Homestay Kayu Manis dengan peralatan lengkap">
+                <img loading="lazy" decoding="async" src="images/dapur1.jpeg" alt="Dapur Moden Homestay Kayu Manis dengan peralatan lengkap">
                 <div class="aktiviti-overlay">
                     <div class="aktiviti-num">06</div>
                     <div class="aktiviti-name">Dapur Moden</div>
                 </div>
             </div>
             <div class="aktiviti-item">
-                <img src="images/halaman.jpeg" alt="Santai Petang di halaman Homestay Kayu Manis">
+                <img loading="lazy" decoding="async" src="images/halaman.jpeg" alt="Santai Petang di halaman Homestay Kayu Manis">
                 <div class="aktiviti-overlay">
                     <div class="aktiviti-num">07</div>
                     <div class="aktiviti-name">Santai Petang</div>
@@ -1791,7 +1815,7 @@
 
                 <div class="footer-col footer-col-center">
                     <div class="footer-logo-box">
-                        <img src="images/logo.jpeg" alt="Logo Homestay Kayu Manis Batu Kurau Perak" class="footer-logo-img">
+                        <img src="images/logo.jpeg" alt="Logo Homestay Kayu Manis Batu Kurau Perak" class="footer-logo-img" loading="eager" decoding="async">
                         <div class="footer-logo-text">
                             <span class="flg-main">KAYU MANIS</span>
                             <span class="flg-sub">Batu Kurau · Perak</span>
@@ -1834,7 +1858,8 @@
                 <span></span><span class="footer-divider-dot">◆</span><span></span>
             </div>
 
-            
+         
+        </div>
     </footer>
 
     <!-- FLOATING WHATSAPP BUTTON -->
@@ -1847,6 +1872,23 @@
     </a>
 
     <script>
+        // Image fade-in bila dah load — supaya tak nampak kosong
+        document.querySelectorAll('img').forEach(img => {
+            if (img.complete && img.naturalHeight !== 0) {
+                img.classList.add('img-loaded');
+            } else {
+                img.addEventListener('load', () => img.classList.add('img-loaded'));
+                img.addEventListener('error', () => {
+                    // Kalau gambar fail load, cuba reload sekali lagi
+                    setTimeout(() => {
+                        const src = img.src;
+                        img.src = '';
+                        img.src = src;
+                    }, 2000);
+                });
+            }
+        });
+
         // Header scroll
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
@@ -1923,5 +1965,4 @@
         });
     </script>
 </body>
-
 </html>
