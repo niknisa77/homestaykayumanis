@@ -1348,9 +1348,9 @@
             }
 
             .hero-bg {
-                background-position: center 45%;
-                background-size: 150%;
-                transform: none;
+                background-position: center 45% !important;
+                background-size: 150% !important;
+                transform: none !important;
                 filter: blur(1px) brightness(0.88);
             }
 
@@ -1426,6 +1426,20 @@
             .gallery-grid-clean { grid-template-columns: 1fr; }
             .aktiviti-grid { grid-template-columns: 1fr 1fr; }
             .about-features { grid-template-columns: 1fr; }
+            .hero-bg {
+                background-size: 150% !important;
+                background-position: center 45% !important;
+                transform: none !important;
+            }
+        }
+
+        /* Extra fix untuk semua phone (portrait mode) */
+        @media (max-width: 600px) and (orientation: portrait) {
+            .hero-bg {
+                background-size: 150% !important;
+                background-position: center 45% !important;
+                transform: none !important;
+            }
         }
 
         /* Tap effect untuk mobile */
@@ -1878,7 +1892,7 @@
                 <span></span><span class="footer-divider-dot">◆</span><span></span>
             </div>
 
-      
+
         </div>
     </footer>
 
@@ -1963,9 +1977,7 @@
                 }
             }, { passive: true });
         } else {
-            // Mobile — zoom sederhana, nampak kayu hitam kiri kanan
-            heroBg.style.backgroundSize = '150%';
-            heroBg.style.backgroundPosition = 'center 45%';
+            // CSS handle mobile zoom - no JS needed
         }
 
         // Staggered fade-in on scroll
