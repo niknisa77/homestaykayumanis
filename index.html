@@ -251,13 +251,26 @@
         .hero-bg {
             position: absolute;
             inset: 0;
-            background-image: url('images/gambarutama.jpeg');
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
+            overflow: hidden;
             transform-origin: center;
-            will-change: transform;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            transform: scale(1.05);
             filter: blur(1.5px) brightness(0.9);
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero-bg img {
+                transform: scale(1.5);
+                object-position: center 45%;
+                filter: blur(1px) brightness(0.88);
+            }
         }
 
         .hero-bg::after {
@@ -1351,9 +1364,6 @@
             }
 
             .hero-bg {
-                background-position: center 45% !important;
-                background-size: 150% !important;
-                transform: none !important;
                 filter: blur(1px) brightness(0.88);
             }
 
@@ -1429,20 +1439,6 @@
             .gallery-grid-clean { grid-template-columns: 1fr; }
             .aktiviti-grid { grid-template-columns: 1fr 1fr; }
             .about-features { grid-template-columns: 1fr; }
-            .hero-bg {
-                background-size: 150% !important;
-                background-position: center 45% !important;
-                transform: none !important;
-            }
-        }
-
-        /* Extra fix untuk semua phone (portrait mode) */
-        @media (max-width: 600px) and (orientation: portrait) {
-            .hero-bg {
-                background-size: 150% !important;
-                background-position: center 45% !important;
-                transform: none !important;
-            }
         }
 
         /* Tap effect untuk mobile */
@@ -1482,7 +1478,9 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="home">
-        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-bg" id="heroBg">
+            <img src="images/gambarutama.jpeg" alt="Homestay Kayu Manis" loading="eager" decoding="async" id="heroBgImg">
+        </div>
         <div class="hero-glow"></div>
         <div class="hero-vignette"></div>
 
@@ -1895,11 +1893,7 @@
                 <span></span><span class="footer-divider-dot">◆</span><span></span>
             </div>
 
-            <!-- Bottom bar -->
-            <div class="footer-bottom">
-                <p>© 2024 Homestay Kayu Manis. Hak Cipta Terpelihara.</p>
-                <p>Penginapan Eksklusif di Batu Kurau, Perak</p>
-            </div>
+      
         </div>
     </footer>
 
@@ -1974,17 +1968,16 @@
             });
         });
 
-        // Hero parallax — desktop full, mobile subtle
+        // Hero parallax — desktop only
         const heroBg = document.getElementById('heroBg');
+        const heroBgImg = document.getElementById('heroBgImg');
         if (window.innerWidth > 768) {
             window.addEventListener('scroll', () => {
                 const s = window.scrollY;
                 if (s < window.innerHeight) {
-                    heroBg.style.transform = `translateY(${s * 0.28}px) scale(1.05)`;
+                    heroBgImg.style.transform = `scale(1.05) translateY(${s * 0.15}px)`;
                 }
             }, { passive: true });
-        } else {
-            // CSS handle mobile zoom - no JS needed
         }
 
         // Staggered fade-in on scroll
