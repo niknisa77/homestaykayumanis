@@ -1261,6 +1261,25 @@
             .gallery-grid-clean { grid-template-columns: repeat(3, 1fr); }
         }
 
+        /* ===== TABLET FIX — hamburger button ===== */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .nav-container {
+                padding: 16px 24px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                margin-left: auto;
+                flex-shrink: 0;
+            }
+
+            nav { order: 3; }
+        }
+
         @media (max-width: 900px) {
             .nav-container { padding: 16px 20px; }
             .section-wrapper { padding: 65px 20px; }
@@ -1859,11 +1878,7 @@
                 <span></span><span class="footer-divider-dot">◆</span><span></span>
             </div>
 
-            <!-- Bottom bar -->
-            <div class="footer-bottom">
-                <p>© 2024 Homestay Kayu Manis. Hak Cipta Terpelihara.</p>
-                <p>Penginapan Eksklusif di Batu Kurau, Perak</p>
-            </div>
+      
         </div>
     </footer>
 
