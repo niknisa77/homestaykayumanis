@@ -1321,7 +1321,7 @@
             .nav-container { padding: 14px 16px; }
             .section-wrapper { padding: 50px 18px; }
 
-            /* ===== HERO MOBILE FIX — saiz sama macam desktop, takde ruang lebih ===== */
+            /* ===== HERO MOBILE FIX — zoom effect sama macam desktop ===== */
             .hero {
                 min-height: 100svh;
                 height: 100svh;
@@ -1329,9 +1329,10 @@
             }
 
             .hero-bg {
-                background-position: center center;
-                background-size: cover;
-                background-attachment: scroll;
+                background-position: center 45%;
+                background-size: 150%;
+                transform: none;
+                filter: blur(1px) brightness(0.88);
             }
 
             .hero-content { padding: 80px 20px 30px; }
@@ -1858,7 +1859,11 @@
                 <span></span><span class="footer-divider-dot">◆</span><span></span>
             </div>
 
-         
+            <!-- Bottom bar -->
+            <div class="footer-bottom">
+                <p>© 2024 Homestay Kayu Manis. Hak Cipta Terpelihara.</p>
+                <p>Penginapan Eksklusif di Batu Kurau, Perak</p>
+            </div>
         </div>
     </footer>
 
@@ -1933,7 +1938,7 @@
             });
         });
 
-        // Hero parallax — desktop only for performance
+        // Hero parallax — desktop full, mobile subtle
         const heroBg = document.getElementById('heroBg');
         if (window.innerWidth > 768) {
             window.addEventListener('scroll', () => {
@@ -1942,6 +1947,10 @@
                     heroBg.style.transform = `translateY(${s * 0.28}px) scale(1.05)`;
                 }
             }, { passive: true });
+        } else {
+            // Mobile — zoom sederhana, nampak kayu hitam kiri kanan
+            heroBg.style.backgroundSize = '150%';
+            heroBg.style.backgroundPosition = 'center 45%';
         }
 
         // Staggered fade-in on scroll
